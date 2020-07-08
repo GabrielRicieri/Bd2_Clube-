@@ -1,0 +1,30 @@
+
+CREATE SEQUENCE clube_clube_id_seq;
+
+CREATE TABLE clube (
+                clube_id INTEGER NOT NULL DEFAULT nextval('clube_clube_id_seq'),
+                clube_cnpj INTEGER NOT NULL,
+                clube_cidade VARCHAR(50) NOT NULL,
+                clube_nome VARCHAR(45) NOT NULL,
+                CONSTRAINT clube_pk PRIMARY KEY (clube_id)
+);
+
+
+ALTER SEQUENCE clube_clube_id_seq OWNED BY clube.clube_id;
+
+CREATE TABLE associado (
+                associado_id INTEGER NOT NULL,
+                associado_nome VARCHAR(45) NOT NULL,
+                associado_date DATE NOT NULL,
+                associado_cpf INTEGER NOT NULL,
+                clube_id INTEGER NOT NULL,
+                CONSTRAINT associado_pk PRIMARY KEY (associado_id)
+);
+
+
+ALTER TABLE associado ADD CONSTRAINT clube_associado_fk
+FOREIGN KEY (clube_id)
+REFERENCES clube (clube_id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
